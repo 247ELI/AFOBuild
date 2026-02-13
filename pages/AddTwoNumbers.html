@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adding Two Numbers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-900 font-sans text-gray-200">
+    <div class="max-w-md mx-auto mt-10 p-6 bg-gray-800 rounded shadow">
+      <h1 class="text-2xl font-bold mb-4 text-center">Adding Two Numbers</h1>
+
+      <input 
+        type="number" 
+        id="num1Input" 
+        placeholder="Enter first number" 
+        class="border p-2 rounded w-full mb-4 text-gray-900"
+      >
+      <input 
+        type="number" 
+        id="num2Input" 
+        placeholder="Enter second number" 
+        class="border p-2 rounded w-full mb-4 text-gray-900"
+      >
+      <button 
+        id="addBtn" 
+        class="bg-green-600 text-white p-2 rounded w-full mb-4"
+      >
+        Add
+      </button>
+
+      <div id="result" class="mt-4 p-4 bg-gray-700 rounded text-center"></div>
+    </div>
+
+    <script>
+      const num1Input = document.getElementById('num1Input');
+      const num2Input = document.getElementById('num2Input');
+      const addBtn = document.getElementById('addBtn');
+      const resultDiv = document.getElementById('result');
+
+      addBtn.addEventListener('click', function() {
+        const num1 = num1Input.value.trim();
+        const num2 = num2Input.value.trim();
+
+        if (num1 === "" || num2 === "") {
+          alert("Please enter both numbers!");
+          return;
+        }
+
+        const url = `https://afoapieg-h3cag2d5cbh6ajd8.westus3-01.azurewebsites.net/AddTwoNumbers/Add/${num1}/${num2}`;
+
+        fetch(url)
+          .then(response => response.text()) 
+          .then(data => {
+            resultDiv.textContent = "Result: " + data;
+          })
+          .catch(error => {
+            resultDiv.textContent = "Error: Could not connect to API";
+            console.error(error);
+          });
+      });
+    </script>
+  </body>
+</html>

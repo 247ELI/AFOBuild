@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Asking Questions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-900 font-sans text-gray-200">
+    <div class="max-w-md mx-auto mt-10 p-6 bg-gray-800 rounded shadow">
+      <h1 class="text-2xl font-bold mb-4 text-center">Ask a Question</h1>
+      <input type="text" id="nameInput" placeholder="Enter your name" class="border p-2 rounded w-full mb-4 text-gray-900">
+      <input type="text" id="wakeUpInput" placeholder="Enter your wake-up time (e.g., 07:30)" class="border p-2 rounded w-full mb-4 text-gray-900">
+      <button id="askBtn" class="bg-purple-600 text-white p-2 rounded w-full mb-4">Ask</button>
+      <div id="answer" class="mt-4 p-4 bg-gray-700 rounded text-center"></div>
+    </div>
+    <script>
+      const nameInput = document.getElementById('nameInput');
+      const wakeUpInput = document.getElementById('wakeUpInput');
+      const askBtn = document.getElementById('askBtn');
+      const answerDiv = document.getElementById('answer');
+      askBtn.addEventListener('click', function() {
+        const name = nameInput.value.trim();
+        const wakeUpTime = wakeUpInput.value.trim();
+        if (!name || !wakeUpTime) return;
+        const url = `https://afoapieg-h3cag2d5cbh6ajd8.westus3-01.azurewebsites.net/AskQuestions/Ask/${encodeURIComponent(name)}/${encodeURIComponent(wakeUpTime)}`;
+        fetch(url)
+          .then(response => response.text())
+          .then(data => { answerDiv.textContent = data; })
+          .catch(error => { answerDiv.textContent = "Error: Could not connect to API"; });
+      });
+    </script>
+  </body>
+</html>

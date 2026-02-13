@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Say Hello</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-900 font-sans text-gray-200">
+    <div class="max-w-md mx-auto mt-10 p-6 bg-gray-800 rounded shadow">
+      <h1 class="text-2xl font-bold mb-4 text-center">Say Hello</h1>
+      <input 
+        type="text" 
+        id="nameInput" 
+        placeholder="Enter your name" 
+        class="border p-2 rounded w-full mb-4 text-gray-900"
+      >
+      <button 
+        id="sayHelloBtn" 
+        class="bg-blue-600 text-white p-2 rounded w-full mb-4"
+      >
+        Say Hello
+      </button>
+      <div id="result" class="mt-4 p-4 bg-gray-700 rounded text-center"></div>
+    </div>
+
+    <script>
+      const nameInput = document.getElementById('nameInput');
+      const sayHelloBtn = document.getElementById('sayHelloBtn');
+      const resultDiv = document.getElementById('result');
+
+      sayHelloBtn.addEventListener('click', function() {
+        const name = nameInput.value.trim();
+        if (!name) {
+          alert('Please enter your name!');
+          return;
+        }
+        
+        const url = 'https://afoapieg-h3cag2d5cbh6ajd8.westus3-01.azurewebsites.net/helloworld/Hello/' + encodeURIComponent(name);
+
+        fetch(url)
+          .then(response => response.text())
+          .then(data => {
+            resultDiv.textContent = data;
+          })
+          .catch(error => {
+            resultDiv.textContent = 'Error: Could not connect to API';
+            console.error(error);
+          });
+      });
+    </script>
+  </body>
+</html>
